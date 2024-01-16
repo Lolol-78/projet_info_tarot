@@ -13,20 +13,21 @@ SCREEN_HEIGHT = 800
 
 
 class Window:
-    def __init__(self) -> None:
+    def __init__(self, joueur) -> None:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.font = pygame.font.SysFont('Roboto', 50)
         
         self.cardsImg = {}
-        for card in ["A0", "A0", "A2", "A3", "A4", "A5", "A6", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8", "K9", "K10", "K11", "K12", "K13", "K14", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13", "P14", "T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14"]:
-            self.cardsImg[card] = pygame.image.load(f"{card}.png")
+        for card in ["A0", "A1", "A2", "A3", "A4", "A5", "A6", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8", "K9", "K10", "K11", "K12", "K13", "K14", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13", "P14", "T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14"]:
+            self.cardsImg[card] = pygame.image.load(f"assets/cards/{card}.png")
+            self.cardsImg[card] = pygame.transform.scale(self.cardsImg[card], (162, 250))
         
         self.tab_choose_username = graphic_choisir_pseudo.TabChooseUsername(self.screen)
         self.tab_select_lobby = graphic_choisir_lobby.TabSelectLobby(self.screen)
         self.tab_waiting_in_lobby = graphic_attente_dans_lobby.WaitingInLobby(self.screen)
         self.tab_tour_de_jeu = graphic_tour_de_jeu.TourDeJeu(self.screen, self.cardsImg)
         self.menu = ''
-        self.main = None
+        self.joueur = joueur
 
     def run(self):
         running = True
@@ -53,7 +54,7 @@ class Window:
             elif self.menu == 'attente_dans_lobby':
                 self.tab_waiting_in_lobby.draw()
             elif self.menu == 'tour_de_jeu':
-                self.tab_tour_de_jeu.draw_cards(self.main)
+                self.tab_tour_de_jeu.draw_cards(self.joueur.main)
             else:
                 self.screen.blit(self.font.render("En attente", False, (255, 255, 255)), (60, 60))
             

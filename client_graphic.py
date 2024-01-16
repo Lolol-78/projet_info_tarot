@@ -13,13 +13,15 @@ SERVER = '172.21.6.50'
 ADDR = (SERVER, PORT)
 
 
-window = graphic.Window()
 
-gui_thread = threading.Thread(target=window.run)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 main_joueur = joueur.Joueur()
+
+window = graphic.Window(main_joueur)
+
+gui_thread = threading.Thread(target=window.run)
 
 def send(msg):
     message = pickle.dumps(msg)
@@ -71,6 +73,7 @@ def choisir_lobby(lst_lobbies):
 
 def recevoir_jeu(main):
     main_joueur.main=main
+    window.menu = 'tour_de_jeu'
     print(f"\nVoici ton jeu:\n{main}\n\n****\n")
 
 
