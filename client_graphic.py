@@ -9,7 +9,7 @@ HEADER = 64
 PORT = 5050
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = '!DISCONNECT'
-SERVER = '172.21.6.50'
+SERVER = '192.168.0.46'
 ADDR = (SERVER, PORT)
 
 
@@ -72,6 +72,8 @@ def choisir_lobby(lst_lobbies):
 
 
 def recevoir_jeu(main):
+    correspondance_carte = {"coeur": 400, "pique": 300, "carreau": 200, "trèfle": 100, "atout": 0}
+    main.sort(key=lambda x: correspondance_carte[x[0]]+x[1])
     main_joueur.main=main
     window.menu = 'tour_de_jeu'
     print(f"\nVoici ton jeu:\n{main}\n\n****\n")
